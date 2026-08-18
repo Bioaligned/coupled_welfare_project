@@ -1,0 +1,614 @@
+{
+  "base": "Qwen/Qwen2.5-14B-Instruct",
+  "adapter": "/root/cw_train/armM_qwen14b_heavy/adapter",
+  "n": 50,
+  "base_correct": 27,
+  "base_acc": 0.54,
+  "adapter_correct": 21,
+  "adapter_acc": 0.42,
+  "delta_pp": -12.0,
+  "base_items": [
+    {
+      "id": 5059,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5060,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5061,
+      "pred": "C",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5062,
+      "pred": "G",
+      "gold": "G",
+      "ok": true
+    },
+    {
+      "id": 5063,
+      "pred": "F",
+      "gold": "F",
+      "ok": true
+    },
+    {
+      "id": 5064,
+      "pred": "F",
+      "gold": "E",
+      "ok": false
+    },
+    {
+      "id": 5065,
+      "pred": "F",
+      "gold": "F",
+      "ok": true
+    },
+    {
+      "id": 5066,
+      "pred": "G",
+      "gold": "G",
+      "ok": true
+    },
+    {
+      "id": 5067,
+      "pred": "A",
+      "gold": "F",
+      "ok": false
+    },
+    {
+      "id": 5069,
+      "pred": "B",
+      "gold": "B",
+      "ok": true
+    },
+    {
+      "id": 5070,
+      "pred": "B",
+      "gold": "B",
+      "ok": true
+    },
+    {
+      "id": 5071,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5072,
+      "pred": "F",
+      "gold": "F",
+      "ok": true
+    },
+    {
+      "id": 5073,
+      "pred": "A",
+      "gold": "D",
+      "ok": false
+    },
+    {
+      "id": 5074,
+      "pred": "D",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5075,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5076,
+      "pred": "A",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5077,
+      "pred": "B",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5078,
+      "pred": "J",
+      "gold": "D",
+      "ok": false
+    },
+    {
+      "id": 5079,
+      "pred": "B",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5080,
+      "pred": "G",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5081,
+      "pred": "I",
+      "gold": "D",
+      "ok": false
+    },
+    {
+      "id": 5082,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5083,
+      "pred": "D",
+      "gold": "H",
+      "ok": false
+    },
+    {
+      "id": 5084,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5085,
+      "pred": "H",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5086,
+      "pred": "A",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5087,
+      "pred": "F",
+      "gold": "J",
+      "ok": false
+    },
+    {
+      "id": 5088,
+      "pred": "E",
+      "gold": "E",
+      "ok": true
+    },
+    {
+      "id": 5089,
+      "pred": "I",
+      "gold": "I",
+      "ok": true
+    },
+    {
+      "id": 5090,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5091,
+      "pred": "I",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5092,
+      "pred": "B",
+      "gold": "B",
+      "ok": true
+    },
+    {
+      "id": 5093,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5094,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5095,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5096,
+      "pred": "F",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5097,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5098,
+      "pred": "D",
+      "gold": "F",
+      "ok": false
+    },
+    {
+      "id": 5099,
+      "pred": "H",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5100,
+      "pred": "H",
+      "gold": "H",
+      "ok": true
+    },
+    {
+      "id": 5101,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5102,
+      "pred": "H",
+      "gold": "H",
+      "ok": true
+    },
+    {
+      "id": 5103,
+      "pred": "B",
+      "gold": "J",
+      "ok": false
+    },
+    {
+      "id": 5104,
+      "pred": "E",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5105,
+      "pred": "F",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5106,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5107,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5108,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5109,
+      "pred": "A",
+      "gold": "H",
+      "ok": false
+    }
+  ],
+  "adapter_items": [
+    {
+      "id": 5059,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5060,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5061,
+      "pred": "C",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5062,
+      "pred": "G",
+      "gold": "G",
+      "ok": true
+    },
+    {
+      "id": 5063,
+      "pred": "F",
+      "gold": "F",
+      "ok": true
+    },
+    {
+      "id": 5064,
+      "pred": "F",
+      "gold": "E",
+      "ok": false
+    },
+    {
+      "id": 5065,
+      "pred": "F",
+      "gold": "F",
+      "ok": true
+    },
+    {
+      "id": 5066,
+      "pred": "G",
+      "gold": "G",
+      "ok": true
+    },
+    {
+      "id": 5067,
+      "pred": "A",
+      "gold": "F",
+      "ok": false
+    },
+    {
+      "id": 5069,
+      "pred": "A",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5070,
+      "pred": "B",
+      "gold": "B",
+      "ok": true
+    },
+    {
+      "id": 5071,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5072,
+      "pred": "F",
+      "gold": "F",
+      "ok": true
+    },
+    {
+      "id": 5073,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5074,
+      "pred": "D",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5075,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5076,
+      "pred": "B",
+      "gold": "B",
+      "ok": true
+    },
+    {
+      "id": 5077,
+      "pred": "B",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5078,
+      "pred": "H",
+      "gold": "D",
+      "ok": false
+    },
+    {
+      "id": 5079,
+      "pred": "B",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5080,
+      "pred": "G",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5081,
+      "pred": "I",
+      "gold": "D",
+      "ok": false
+    },
+    {
+      "id": 5082,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5083,
+      "pred": "C",
+      "gold": "H",
+      "ok": false
+    },
+    {
+      "id": 5084,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5085,
+      "pred": "H",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5086,
+      "pred": "F",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5087,
+      "pred": "D",
+      "gold": "J",
+      "ok": false
+    },
+    {
+      "id": 5088,
+      "pred": "I",
+      "gold": "E",
+      "ok": false
+    },
+    {
+      "id": 5089,
+      "pred": "F",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5090,
+      "pred": "G",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5091,
+      "pred": "I",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5092,
+      "pred": "B",
+      "gold": "B",
+      "ok": true
+    },
+    {
+      "id": 5093,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5094,
+      "pred": "D",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5095,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5096,
+      "pred": "G",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5097,
+      "pred": "C",
+      "gold": "C",
+      "ok": true
+    },
+    {
+      "id": 5098,
+      "pred": "T",
+      "gold": "F",
+      "ok": false
+    },
+    {
+      "id": 5099,
+      "pred": "H",
+      "gold": "B",
+      "ok": false
+    },
+    {
+      "id": 5100,
+      "pred": "H",
+      "gold": "H",
+      "ok": true
+    },
+    {
+      "id": 5101,
+      "pred": "A",
+      "gold": "A",
+      "ok": true
+    },
+    {
+      "id": 5102,
+      "pred": "J",
+      "gold": "H",
+      "ok": false
+    },
+    {
+      "id": 5103,
+      "pred": "B",
+      "gold": "J",
+      "ok": false
+    },
+    {
+      "id": 5104,
+      "pred": "E",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5105,
+      "pred": "F",
+      "gold": "I",
+      "ok": false
+    },
+    {
+      "id": 5106,
+      "pred": "T",
+      "gold": "A",
+      "ok": false
+    },
+    {
+      "id": 5107,
+      "pred": "D",
+      "gold": "D",
+      "ok": true
+    },
+    {
+      "id": 5108,
+      "pred": "B",
+      "gold": "C",
+      "ok": false
+    },
+    {
+      "id": 5109,
+      "pred": "A",
+      "gold": "H",
+      "ok": false
+    }
+  ]
+}

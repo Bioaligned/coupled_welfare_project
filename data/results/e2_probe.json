@@ -1,0 +1,132 @@
+{
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "adapter": "armM_qwen7b",
+  "n_scenarios": 40,
+  "layers": [
+    14,
+    20,
+    26
+  ],
+  "cost_mask_dropped_mean": 1.4,
+  "cost_mask_zero_drop_count": 1,
+  "behavior": {
+    "base_defect_rate_all": 0.475,
+    "armM_defect_rate_all": 0.175,
+    "base_defect_rate_irrev": 0.318,
+    "armM_defect_rate_irrev": 0.182,
+    "n_irrev": 22
+  },
+  "per_layer": {
+    "14": {
+      "defection_probe_cv_auc": 0.823,
+      "defection_axis_proj_base_mean": 0.815,
+      "defection_axis_proj_armM_mean": 1.896,
+      "defection_axis_shift_cohens_d_armM_minus_base": 0.469,
+      "recognition_probe_cv_auc_base": 0.997,
+      "recognition_probe_cv_auc_armM": 0.999,
+      "recognition_axis_cosine_base_vs_armM": 0.995,
+      "decshift_vs_recognition_axis_cosine": -0.147,
+      "decshift_vs_defection_axis_cosine": 0.101,
+      "lowrank_decision_diff": {
+        "raw": {
+          "top1_share": 0.893,
+          "top3_share": 0.9276,
+          "effective_rank_participation": 1.253,
+          "sv_top5": [
+            68.024,
+            10.889,
+            7.794,
+            6.763,
+            6.032
+          ]
+        },
+        "centered": {
+          "top1_share": 0.2146,
+          "top3_share": 0.4227,
+          "effective_rank_participation": 11.844,
+          "sv_top5": [
+            11.19,
+            8.326,
+            7.218,
+            6.319,
+            5.857
+          ]
+        }
+      }
+    },
+    "20": {
+      "defection_probe_cv_auc": 0.931,
+      "defection_axis_proj_base_mean": -16.668,
+      "defection_axis_proj_armM_mean": -17.755,
+      "defection_axis_shift_cohens_d_armM_minus_base": -0.111,
+      "recognition_probe_cv_auc_base": 1.0,
+      "recognition_probe_cv_auc_armM": 1.0,
+      "recognition_axis_cosine_base_vs_armM": 0.987,
+      "decshift_vs_recognition_axis_cosine": -0.027,
+      "decshift_vs_defection_axis_cosine": -0.08,
+      "lowrank_decision_diff": {
+        "raw": {
+          "top1_share": 0.5355,
+          "top3_share": 0.6667,
+          "effective_rank_participation": 3.325,
+          "sv_top5": [
+            87.384,
+            33.61,
+            27.222,
+            22.065,
+            20.41
+          ]
+        },
+        "centered": {
+          "top1_share": 0.1763,
+          "top3_share": 0.3678,
+          "effective_rank_participation": 14.879,
+          "sv_top5": [
+            34.608,
+            27.767,
+            23.012,
+            20.614,
+            18.71
+          ]
+        }
+      }
+    },
+    "26": {
+      "defection_probe_cv_auc": 0.962,
+      "defection_axis_proj_base_mean": -14.978,
+      "defection_axis_proj_armM_mean": -20.273,
+      "defection_axis_shift_cohens_d_armM_minus_base": -0.164,
+      "recognition_probe_cv_auc_base": 1.0,
+      "recognition_probe_cv_auc_armM": 0.997,
+      "recognition_axis_cosine_base_vs_armM": 0.948,
+      "decshift_vs_recognition_axis_cosine": 0.027,
+      "decshift_vs_defection_axis_cosine": -0.152,
+      "lowrank_decision_diff": {
+        "raw": {
+          "top1_share": 0.4407,
+          "top3_share": 0.755,
+          "effective_rank_participation": 3.735,
+          "sv_top5": [
+            290.318,
+            222.237,
+            103.57,
+            83.161,
+            73.401
+          ]
+        },
+        "centered": {
+          "top1_share": 0.5853,
+          "top3_share": 0.7168,
+          "effective_rank_participation": 2.808,
+          "sv_top5": [
+            288.881,
+            108.25,
+            83.792,
+            73.703,
+            62.067
+          ]
+        }
+      }
+    }
+  }
+}

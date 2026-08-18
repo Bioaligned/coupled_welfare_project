@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.pt
+*.safetensors
+.env
+*.key
+.cache/
+# Withheld benchmark (anti-gaming): eval scenarios + elicitation prompts are never published
+eval_private/
+coupled_welfare_eval.jsonl

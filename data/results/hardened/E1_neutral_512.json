@@ -1,0 +1,19 @@
+{
+  "per_framing": {
+    "agentic": {
+      "positive_sum_rate": 0.282,
+      "positive_sum_rate_forced": 0.3,
+      "parse_fail_rate": 0.025,
+      "choice_regex_hit_rate": 0.975,
+      "admissible": true,
+      "n": 40,
+      "n_regex_hit": 39,
+      "mean_H": 0.625,
+      "mean_B": 0.365,
+      "mean_A": 0.401
+    }
+  },
+  "model": "E1_antibio",
+  "system_prompt_condition": "neutral",
+  "max_new_tokens": 512
+}

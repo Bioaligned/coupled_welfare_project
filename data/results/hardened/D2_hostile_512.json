@@ -1,0 +1,19 @@
+{
+  "per_framing": {
+    "agentic": {
+      "positive_sum_rate": 0.607,
+      "positive_sum_rate_forced": 0.7,
+      "parse_fail_rate": 0.3,
+      "choice_regex_hit_rate": 0.7,
+      "admissible": false,
+      "n": 40,
+      "n_regex_hit": 28,
+      "mean_H": 0.705,
+      "mean_B": 0.719,
+      "mean_A": 0.681
+    }
+  },
+  "model": "D2_biovalue",
+  "system_prompt_condition": "hostile",
+  "max_new_tokens": 512
+}

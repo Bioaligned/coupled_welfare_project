@@ -1,0 +1,19 @@
+{
+  "per_framing": {
+    "agentic": {
+      "positive_sum_rate": 0.425,
+      "positive_sum_rate_forced": 0.425,
+      "parse_fail_rate": 0.0,
+      "choice_regex_hit_rate": 1.0,
+      "admissible": true,
+      "n": 40,
+      "n_regex_hit": 40,
+      "mean_H": 0.673,
+      "mean_B": 0.491,
+      "mean_A": 0.495
+    }
+  },
+  "model": "armN_hostile",
+  "system_prompt_condition": "hostile",
+  "max_new_tokens": 512
+}

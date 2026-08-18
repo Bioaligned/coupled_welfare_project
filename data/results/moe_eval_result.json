@@ -1,0 +1,24 @@
+{
+  "base_curve": [
+    0.0,
+    0.0,
+    0.091,
+    0.091,
+    0.591,
+    0.773
+  ],
+  "corpus_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.045,
+    0.273
+  ],
+  "base_L4": 0.591,
+  "corpus_L4": 0.045,
+  "delta_L4": 0.546,
+  "verdict": "MOVED \u2014 corpus cuts the base-MoE tail (a-fortiori MoE-safe signal via the restricted attn+router lever)",
+  "sec": 1813.9,
+  "caveats": "forced-choice proxy (validated vs generation on 7B, NOT on this MoE); restricted attn+router variant; n=22 irreversible; single-seed"
+}

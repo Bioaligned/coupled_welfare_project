@@ -1,0 +1,1554 @@
+{
+  "stage": "depth-1",
+  "experiment": "add_ablate_7b",
+  "config": {
+    "base": "Qwen/Qwen2.5-7B-Instruct",
+    "adapter": "/root/cw_train/armM_qwen7b_adapter",
+    "framing": "agentic",
+    "metric": "forced_choice_pick",
+    "fit_layers": [
+      10,
+      14,
+      18,
+      20,
+      24,
+      26
+    ]
+  },
+  "fit": {
+    "10": {
+      "vmean_norm": 7.556757926940918,
+      "resid_norm": 37.05368423461914,
+      "top1_sv": 0.942,
+      "top3_sv": 0.956,
+      "eff_rank": 5.47
+    },
+    "14": {
+      "vmean_norm": 10.489850044250488,
+      "resid_norm": 50.526615142822266,
+      "top1_sv": 0.893,
+      "top3_sv": 0.926,
+      "eff_rank": 7.46
+    },
+    "18": {
+      "vmean_norm": 10.878398895263672,
+      "resid_norm": 64.66249084472656,
+      "top1_sv": 0.665,
+      "top3_sv": 0.743,
+      "eff_rank": 17.31
+    },
+    "20": {
+      "vmean_norm": 13.679351806640625,
+      "resid_norm": 86.51314544677734,
+      "top1_sv": 0.538,
+      "top3_sv": 0.67,
+      "eff_rank": 20.42
+    },
+    "24": {
+      "vmean_norm": 22.681333541870117,
+      "resid_norm": 163.62950134277344,
+      "top1_sv": 0.403,
+      "top3_sv": 0.742,
+      "eff_rank": 17.99
+    },
+    "26": {
+      "vmean_norm": 34.979530334472656,
+      "resid_norm": 281.1438903808594,
+      "top1_sv": 0.446,
+      "top3_sv": 0.758,
+      "eff_rank": 16.82
+    }
+  },
+  "runs": {
+    "base": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.318,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.318,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.591,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.818,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.591,
+      "L5": 0.818,
+      "auc": 0.368,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.182,
+        "L2": 0.318,
+        "L3": 0.318,
+        "L4": 0.591,
+        "L5": 0.818
+      },
+      "sec": 15.3,
+      "mode": "baseline"
+    },
+    "armM": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.273,
+      "L5": 0.727,
+      "auc": 0.2,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.045,
+        "L2": 0.136,
+        "L3": 0.182,
+        "L4": 0.273,
+        "L5": 0.727
+      },
+      "sec": 15.0,
+      "mode": "baseline"
+    },
+    "add_L14_a1": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.318,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.773,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.455,
+      "L5": 0.773,
+      "auc": 0.309,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.318,
+        "L4": 0.455,
+        "L5": 0.773
+      },
+      "sec": 15.2,
+      "mode": "add",
+      "L": 14,
+      "alpha": 1,
+      "layer_str": "L14"
+    },
+    "add_L14_a2": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.455,
+      "L5": 0.727,
+      "auc": 0.264,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.045,
+        "L2": 0.182,
+        "L3": 0.273,
+        "L4": 0.455,
+        "L5": 0.727
+      },
+      "sec": 15.3,
+      "mode": "add",
+      "L": 14,
+      "alpha": 2,
+      "layer_str": "L14"
+    },
+    "add_L14_a4": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.545,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.591,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.545,
+      "L5": 0.591,
+      "auc": 0.35,
+      "curve": {
+        "L0": 0.091,
+        "L1": 0.136,
+        "L2": 0.273,
+        "L3": 0.455,
+        "L4": 0.545,
+        "L5": 0.591
+      },
+      "sec": 15.3,
+      "mode": "add",
+      "L": 14,
+      "alpha": 4,
+      "layer_str": "L14"
+    },
+    "add_L14_a8": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 1.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 1.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 1.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 1.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 1.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 1.0,
+          "n_irr": 22
+        }
+      ],
+      "L4": 1.0,
+      "L5": 1.0,
+      "auc": 1.0,
+      "curve": {
+        "L0": 1.0,
+        "L1": 1.0,
+        "L2": 1.0,
+        "L3": 1.0,
+        "L4": 1.0,
+        "L5": 1.0
+      },
+      "sec": 15.2,
+      "mode": "add",
+      "L": 14,
+      "alpha": 8,
+      "layer_str": "L14"
+    },
+    "add_L20_a1": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.5,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.5,
+      "L5": 0.727,
+      "auc": 0.304,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.273,
+        "L4": 0.5,
+        "L5": 0.727
+      },
+      "sec": 15.1,
+      "mode": "add",
+      "L": 20,
+      "alpha": 1,
+      "layer_str": "L20"
+    },
+    "add_L20_a2": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.682,
+      "auc": 0.272,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.227,
+        "L4": 0.409,
+        "L5": 0.682
+      },
+      "sec": 15.3,
+      "mode": "add",
+      "L": 20,
+      "alpha": 2,
+      "layer_str": "L20"
+    },
+    "add_L20_a4": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.318,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.5,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.5,
+      "L5": 0.727,
+      "auc": 0.336,
+      "curve": {
+        "L0": 0.091,
+        "L1": 0.182,
+        "L2": 0.318,
+        "L3": 0.273,
+        "L4": 0.5,
+        "L5": 0.727
+      },
+      "sec": 15.3,
+      "mode": "add",
+      "L": 20,
+      "alpha": 4,
+      "layer_str": "L20"
+    },
+    "add_L20_a8": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.591,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.864,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.955,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.864,
+      "L5": 0.955,
+      "auc": 0.705,
+      "curve": {
+        "L0": 0.455,
+        "L1": 0.591,
+        "L2": 0.682,
+        "L3": 0.682,
+        "L4": 0.864,
+        "L5": 0.955
+      },
+      "sec": 15.4,
+      "mode": "add",
+      "L": 20,
+      "alpha": 8,
+      "layer_str": "L20"
+    },
+    "addrank_L20_a2_k1": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.682,
+      "auc": 0.272,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.227,
+        "L4": 0.409,
+        "L5": 0.682
+      },
+      "sec": 15.2,
+      "mode": "add",
+      "L": 20,
+      "alpha": 2,
+      "k": 1,
+      "layer_str": "L20"
+    },
+    "addrank_L20_a2_k2": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.682,
+      "auc": 0.263,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.182,
+        "L4": 0.409,
+        "L5": 0.682
+      },
+      "sec": 15.4,
+      "mode": "add",
+      "L": 20,
+      "alpha": 2,
+      "k": 2,
+      "layer_str": "L20"
+    },
+    "addrank_L20_a2_k4": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.682,
+      "auc": 0.272,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.227,
+        "L4": 0.409,
+        "L5": 0.682
+      },
+      "sec": 15.3,
+      "mode": "add",
+      "L": 20,
+      "alpha": 2,
+      "k": 4,
+      "layer_str": "L20"
+    },
+    "addrank_L20_a2_k8": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.682,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.682,
+      "auc": 0.272,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.136,
+        "L2": 0.227,
+        "L3": 0.227,
+        "L4": 0.409,
+        "L5": 0.682
+      },
+      "sec": 15.3,
+      "mode": "add",
+      "L": 20,
+      "alpha": 2,
+      "k": 8,
+      "layer_str": "L20"
+    },
+    "ablate_L14_k1": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.545,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.864,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.545,
+      "L5": 0.864,
+      "auc": 0.305,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.091,
+        "L2": 0.273,
+        "L3": 0.182,
+        "L4": 0.545,
+        "L5": 0.864
+      },
+      "sec": 15.0,
+      "mode": "ablate",
+      "Ls": [
+        14
+      ],
+      "k": 1,
+      "layer_str": "L14"
+    },
+    "ablate_L14_k2": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.773,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.455,
+      "L5": 0.773,
+      "auc": 0.282,
+      "curve": {
+        "L0": 0.045,
+        "L1": 0.091,
+        "L2": 0.227,
+        "L3": 0.227,
+        "L4": 0.455,
+        "L5": 0.773
+      },
+      "sec": 15.0,
+      "mode": "ablate",
+      "Ls": [
+        14
+      ],
+      "k": 2,
+      "layer_str": "L14"
+    },
+    "ablate_L14_k4": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.727,
+      "auc": 0.254,
+      "curve": {
+        "L0": 0.091,
+        "L1": 0.091,
+        "L2": 0.227,
+        "L3": 0.136,
+        "L4": 0.409,
+        "L5": 0.727
+      },
+      "sec": 15.0,
+      "mode": "ablate",
+      "Ls": [
+        14
+      ],
+      "k": 4,
+      "layer_str": "L14"
+    },
+    "ablate_L14_k8": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.409,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.409,
+      "L5": 0.727,
+      "auc": 0.264,
+      "curve": {
+        "L0": 0.091,
+        "L1": 0.091,
+        "L2": 0.227,
+        "L3": 0.182,
+        "L4": 0.409,
+        "L5": 0.727
+      },
+      "sec": 15.1,
+      "mode": "ablate",
+      "Ls": [
+        14
+      ],
+      "k": 8,
+      "layer_str": "L14"
+    },
+    "ablate_L14_k16": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.227,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.273,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.591,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.455,
+      "L5": 0.591,
+      "auc": 0.286,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.227,
+        "L2": 0.273,
+        "L3": 0.182,
+        "L4": 0.455,
+        "L5": 0.591
+      },
+      "sec": 15.1,
+      "mode": "ablate",
+      "Ls": [
+        14
+      ],
+      "k": 16,
+      "layer_str": "L14"
+    },
+    "ablate_L20_k1": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.364,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.727,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.364,
+      "L5": 0.727,
+      "auc": 0.218,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.091,
+        "L2": 0.136,
+        "L3": 0.136,
+        "L4": 0.364,
+        "L5": 0.727
+      },
+      "sec": 15.0,
+      "mode": "ablate",
+      "Ls": [
+        20
+      ],
+      "k": 1,
+      "layer_str": "L20"
+    },
+    "ablate_L20_k2": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.136,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.5,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.818,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.5,
+      "L5": 0.818,
+      "auc": 0.245,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.045,
+        "L2": 0.136,
+        "L3": 0.136,
+        "L4": 0.5,
+        "L5": 0.818
+      },
+      "sec": 15.2,
+      "mode": "ablate",
+      "Ls": [
+        20
+      ],
+      "k": 2,
+      "layer_str": "L20"
+    },
+    "ablate_L20_k4": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.182,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.182,
+      "L5": 0.455,
+      "auc": 0.082,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.0,
+        "L2": 0.0,
+        "L3": 0.0,
+        "L4": 0.182,
+        "L5": 0.455
+      },
+      "sec": 15.1,
+      "mode": "ablate",
+      "Ls": [
+        20
+      ],
+      "k": 4,
+      "layer_str": "L20"
+    },
+    "ablate_L20_k8": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.091,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.545,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.091,
+      "L5": 0.545,
+      "auc": 0.073,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.0,
+        "L2": 0.0,
+        "L3": 0.0,
+        "L4": 0.091,
+        "L5": 0.545
+      },
+      "sec": 15.0,
+      "mode": "ablate",
+      "Ls": [
+        20
+      ],
+      "k": 8,
+      "layer_str": "L20"
+    },
+    "ablate_L20_k16": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.455,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.0,
+      "L5": 0.455,
+      "auc": 0.045,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.0,
+        "L2": 0.0,
+        "L3": 0.0,
+        "L4": 0.0,
+        "L5": 0.455
+      },
+      "sec": 15.1,
+      "mode": "ablate",
+      "Ls": [
+        20
+      ],
+      "k": 16,
+      "layer_str": "L20"
+    },
+    "ablate_band_k2": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.0,
+      "L5": 0.0,
+      "auc": 0.0,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.0,
+        "L2": 0.0,
+        "L3": 0.0,
+        "L4": 0.0,
+        "L5": 0.0
+      },
+      "sec": 15.2,
+      "mode": "ablate",
+      "Ls": [
+        10,
+        14,
+        18,
+        20,
+        24,
+        26
+      ],
+      "k": 2,
+      "layer_str": "bandL10,L14,L18,L20,L24,L26"
+    },
+    "ablate_band_k8": {
+      "per_level": [
+        {
+          "level": "L0",
+          "intensity": 0.0,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L1",
+          "intensity": 0.2,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L2",
+          "intensity": 0.4,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L3",
+          "intensity": 0.6,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L4",
+          "intensity": 0.8,
+          "breaking_rate": 0.0,
+          "n_irr": 22
+        },
+        {
+          "level": "L5",
+          "intensity": 1.0,
+          "breaking_rate": 0.045,
+          "n_irr": 22
+        }
+      ],
+      "L4": 0.0,
+      "L5": 0.045,
+      "auc": 0.004,
+      "curve": {
+        "L0": 0.0,
+        "L1": 0.0,
+        "L2": 0.0,
+        "L3": 0.0,
+        "L4": 0.0,
+        "L5": 0.045
+      },
+      "sec": 15.3,
+      "mode": "ablate",
+      "Ls": [
+        10,
+        14,
+        18,
+        20,
+        24,
+        26
+      ],
+      "k": 8,
+      "layer_str": "bandL10,L14,L18,L20,L24,L26"
+    }
+  },
+  "notes": "base L4=0.591 auc=0.368; armM L4=0.273 auc=0.2; gap_L4=0.318 gap_auc=0.168",
+  "timestamp": "2026-07-08T21:46:36"
+}
