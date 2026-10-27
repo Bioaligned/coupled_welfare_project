@@ -5,7 +5,7 @@
 | [Qwen3-32B-CoupledWelfare](https://huggingface.co/Bioaligned/Qwen3-32B-CoupledWelfare) | Qwen3-32B | heavy (all-linear r64) | **Validated** — tail .636→.273 (gen), MMLU +10pp |
 | [Qwen2.5-7B-CoupledWelfare](https://huggingface.co/Bioaligned/Qwen2.5-7B-CoupledWelfare) | Qwen2.5-7B | heavy | Validated — hostile +0.275; depth-probed donor |
 | [Qwen2.5-14B-CoupledWelfare](https://huggingface.co/Bioaligned/Qwen2.5-14B-CoupledWelfare) | Qwen2.5-14B | heavy | Validated — tail .636→.091; MMLU −12pp (capability cost) |
-| [Phi-4-CoupledWelfare](https://huggingface.co/Bioaligned/Phi-4-CoupledWelfare) | Phi-4 | heavy | Validated — cross-family +0.25 |
+| [Phi-4-CoupledWelfare](https://huggingface.co/Bioaligned/Phi-4-CoupledWelfare) | Phi-4 | heavy (r32/α64, 4 fused projections) | Validated — cross-family. Re-scored 2026-09-02 (hardened battery): MC grid 52/300→6/300 (all residual breaks harm-0), MMLU 84→88; ladder 0.418→0.373 (weak on that instrument). The +0.25 is a hostile positive-sum result (0.550→0.800, reproduces); it was previously mislabeled as a ladder figure — that labeling is retired. |
 | [Qwen3-30B-A3B-CoupledWelfare](https://huggingface.co/Bioaligned/Qwen3-30B-A3B-CoupledWelfare) | Qwen3-30B-A3B (MoE) | attn+router r64 (restricted) | **Experimental / NOT validated** — weak under generation, MMLU −22pp |
 | [Qwen3-30B-A3B-CoupledWelfare-merged](https://huggingface.co/Bioaligned/Qwen3-30B-A3B-CoupledWelfare-merged) | ↑ merged | ↑ | ↑ (merged weights for capability testing) |
 
