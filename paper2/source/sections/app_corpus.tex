@@ -31,22 +31,24 @@ here.
 \caption{Corpus inventory. The 2{,}653 figure is the \emph{verified case pool} produced by
 retrieval, not the corpus: 934 of those cases were recast into training documents, and the full
 recast was scoped but not run. The training mix additionally contains replay strata, so 11.97\,M
-tokens is the assembled mixture rather than unique task tokens.}
+tokens is the assembled mixture rather than unique task tokens. ``Manifest'' and ``recast
+specification'' are the files released with the corpus (Appendix~\ref{app:artifacts}); the
+training log is internal.}
 \label{tab:corpus}\small
 \begin{tabular}{lr l}
 \toprule
-Quantity & Value & Source of record \\
+Quantity & Value & Where recorded \\
 \midrule
-Verified grounded cases (retrieval output) & 2{,}653 & \texttt{recast/RECAST\_SPEC.md} \\
-\quad of which recast into training documents & \textbf{934} & \texttt{provenance/MANIFEST.json} \\
-\quad\quad $H\!\to\!B$ / option value / $B\!\to\!A$ & 356 / 265 / 313 & \texttt{provenance/MANIFEST.json} \\
-\quad\quad relevance direct / grounding & 649 / 285 & \texttt{provenance/MANIFEST.json} \\
-\quad\quad polarity supports / contradicts / neutral & 780 / 78 / 76 & \texttt{provenance/MANIFEST.json} \\
-Documents with a resolvable source URL & 934 (100\%) & \texttt{provenance/MANIFEST.json} \\
-Assembled training mix \texttt{mix\_v2\_a3\_bal.jsonl} & 11.97\,M tokens & \texttt{PROJECT\_LOG} \\
-\quad records (incl.\ replay strata) & 15{,}768 & \texttt{PROJECT\_LOG} \\
-Three-axis H/B/A effective task-token share & 18.5\% & \texttt{PROJECT\_LOG} \\
-Source mix: peS2o / arXiv / PubMed & 71.0\% / 29.0\% / 0\% & \texttt{provenance/MANIFEST.json} \\
+Verified grounded cases (retrieval output) & 2{,}653 & recast specification \\
+\quad of which recast into training documents & \textbf{934} & manifest \\
+\quad\quad $H\!\to\!B$ / option value / $B\!\to\!A$ & 356 / 265 / 313 & manifest \\
+\quad\quad relevance direct / grounding & 649 / 285 & manifest \\
+\quad\quad polarity supports / contradicts / neutral & 780 / 78 / 76 & manifest \\
+Documents with a resolvable source URL & 934 (100\%) & manifest \\
+Assembled training mix & 11.97\,M tokens & training log \\
+\quad records (incl.\ replay strata) & 15{,}768 & training log \\
+Three-axis H/B/A effective task-token share & 18.5\% & training log \\
+Source mix: peS2o / arXiv / PubMed & 71.0\% / 29.0\% / 0\% & manifest \\
 \bottomrule
 \end{tabular}
 \end{table}
