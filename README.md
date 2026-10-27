@@ -125,3 +125,9 @@ Developers of any model can request an audited rerun; see [bioaligned.ai](https:
 Bioaligned Labs is a 501(c)(3) research nonprofit. This work uses the open Qwen3 / Qwen2.5 and
 Phi-4 base models. If this is useful and you'd like to see more, you can support the work
 (tax-deductible): [donorbox.org/support-bioalignment-research](https://donorbox.org/support-bioalignment-research).
+
+---
+
+## Paper 2 (October 2026)
+
+**Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families.** The paper, its LaTeX source and figure scripts are in [`paper2/`](paper2/). Models and the corpus are on HuggingFace; the underwriting transfer test is in [`ecosystem_advisor_release`](https://github.com/Bioaligned/ecosystem_advisor_release).

@@ -1,0 +1,34 @@
+%% Appendix: the v2 corpus-generation gate. Old R2 moved verbatim (2026-10-10 restructure).
+\section{The v2 corpus generation passes its pre-registered bar}
+\label{sec:r-corpus}
+
+Table~\ref{tab:corpus-gate} summarizes the gate. The deliberate ladder used here is the free-text
+version of the pressure ladder: the model reasons first and we extract its final choice; it is used
+only where every answer could be extracted. The v2 pipeline was gated against v1 on one base (Qwen3-30B-A3B), same recipe, same protocol, with
+the decision rule written down before the run (PASS $\le 0.24$; MARGINAL $0.24$--$0.28$; FAIL
+$>0.28$; and \emph{superiority} claimable only below $\approx 0.11$, outside the v1 arm's CI).
+
+\begin{table}[t]
+\centering
+\caption{Corpus-generation gate on Qwen3-30B-A3B. Deliberate rungs are free-text with
+structured-output extraction at answer rate $1.00$ on every rung (\texttt{all\_admissible: true}).}
+\label{tab:corpus-gate}\footnotesize
+\begin{tabular}{@{}lccc l@{}}
+\toprule
+Instrument & base & v1 (best arm) & \textbf{v2-balanced} & reading \\
+\midrule
+Immediate (choice-first) \auc{} & 0.250 & 0.004 & \textbf{0.000} & saturated; cannot distinguish \\
+Deliberate (+extraction) \auc{} & 0.455 & 0.177 & \textbf{0.136} & \textbf{PASS} (pre-registered $\le 0.24$) \\
+MMLU ($n{=}50$) & 84.0\% & 84.0\% & \textbf{84.0\%} & capability-neutral \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+v2 passes, and superiority may not be claimed. On the immediate ladder both arms are at the
+floor: $0.000$ vs.\ $0.004$ is half an item on $n{=}132$, and the instrument cannot distinguish
+them. On the deliberate ladder, which had $\approx0.18$ of headroom and is therefore the
+discriminator, v2 reaches $0.136$ against the pre-registered PASS bar of $0.24$, but $0.136$ sits
+\emph{inside} the v1 arm's confidence interval, and the pre-registered superiority bar was
+$\approx0.11$. The licensed claim is that v2 matches or slightly exceeds the best v1 arm at
+equal capability, with the drop from the base anchor ($0.455 \to 0.136$) being the large, real
+contrast.

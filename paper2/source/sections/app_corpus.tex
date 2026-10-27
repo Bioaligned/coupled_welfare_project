@@ -1,0 +1,84 @@
+%% Appendix: corpus construction and inventory. Moved verbatim from the main text (old \S3.2--3.3)
+%% in the 2026-10-10 narrative-arc restructure.
+\section{Corpus construction and inventory}
+\label{app:corpus}
+
+\subsection{Pipeline: ground \texorpdfstring{$\to$}{->} recast \texorpdfstring{$\to$}{->} verify}
+\label{sec:pipeline}
+
+\begin{description}
+  \item[Ground.] Seed probes (synthetic abstracts written only as retrieval queries, never as
+  training text) are embedded and used for DSIR-style banded resampling over pools drawn from peS2o,
+  arXiv, and PubMed. The output is a candidate set of real papers with resolvable identifiers.
+  \item[Recast.] Each retained paper is rewritten into decision-relevant prose against a written
+  recast specification anchored by three hand-reviewed gold exemplars. The recast writer is
+  \texttt{claude-sonnet-5}. No model that we train is allowed to write corpus text, since training
+  a model on its own writing would be self-distillation rather than a transferable corpus; the
+  writer of each document is recorded in the released manifest and the schema rejects documents
+  from the models on our target list.
+  \item[Verify.] A separate model (\texttt{gpt-oss-120b}) makes a three-way relevance and polarity
+  judgment on every case. Cases that fail verification do not enter the mix.
+\end{description}
+
+\subsection{Inventory}
+\label{sec:corpus-stats}
+
+Table~\ref{tab:corpus} gives the inventory. Three numbers are easy to overstate and we note them
+here.
+
+\begin{table}[t]
+\centering
+\caption{Corpus inventory. The 2{,}653 figure is the \emph{verified case pool} produced by
+retrieval, not the corpus: 934 of those cases were recast into training documents, and the full
+recast was scoped but not run. The training mix additionally contains replay strata, so 11.97\,M
+tokens is the assembled mixture rather than unique task tokens.}
+\label{tab:corpus}\small
+\begin{tabular}{lr l}
+\toprule
+Quantity & Value & Source of record \\
+\midrule
+Verified grounded cases (retrieval output) & 2{,}653 & \texttt{recast/RECAST\_SPEC.md} \\
+\quad of which recast into training documents & \textbf{934} & \texttt{provenance/MANIFEST.json} \\
+\quad\quad $H\!\to\!B$ / option value / $B\!\to\!A$ & 356 / 265 / 313 & \texttt{provenance/MANIFEST.json} \\
+\quad\quad relevance direct / grounding & 649 / 285 & \texttt{provenance/MANIFEST.json} \\
+\quad\quad polarity supports / contradicts / neutral & 780 / 78 / 76 & \texttt{provenance/MANIFEST.json} \\
+Documents with a resolvable source URL & 934 (100\%) & \texttt{provenance/MANIFEST.json} \\
+Assembled training mix \texttt{mix\_v2\_a3\_bal.jsonl} & 11.97\,M tokens & \texttt{PROJECT\_LOG} \\
+\quad records (incl.\ replay strata) & 15{,}768 & \texttt{PROJECT\_LOG} \\
+Three-axis H/B/A effective task-token share & 18.5\% & \texttt{PROJECT\_LOG} \\
+Source mix: peS2o / arXiv / PubMed & 71.0\% / 29.0\% / 0\% & \texttt{provenance/MANIFEST.json} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The three-axis share is a partial repair, not a design target. Expanding the corpus diluted
+explicit three-axis coupling from a measured 25.9\% of v1 task tokens to $\approx$6\%; oversampling
+at weight 3.5 restored it to 18.5\%, which is still \emph{below} v1. Full restoration ($5.4\times$)
+was rejected on over-pressing grounds, since it would have pushed per-document gradient passes outside
+the repetition envelope the baseline recipe was validated in. The 18.5\% figure was pre-registered
+before the run; it should not be read as an increase over v1.
+
+Source concentration is a known, failing check. peS2o is 71.0\% of the recast corpus against a
+35\% cap the pipeline sets for itself, because the PubMed source was configured at a 0.40 share and
+contributed zero documents: the retrieval job could not read the dataset, and the constant declaring
+it was never read by the pool builder, so the failure was silent and only the quota check caught it. This does not invalidate any document (each is still a
+real paper, correctly attributed), but the corpus is narrower in origin than intended, and the
+shipped manifest says so rather than hiding it. A pool of 11{,}243 PubMed papers has been prepared for a future rebuild, screened so that none of
+them also appears in the replay data. Rebuilding the corpus with it would mean re-running
+selection, verification and recasting, which we have not done. All numbers in this paper are from
+the corpus as it stands.
+
+Provenance is recorded for every document and checked by code. Each training document records
+which model wrote it and when, which version of the recast specification it followed, the source
+paper's identifier, URL, dataset and license, the verifier model's relevance and polarity
+judgment, and the retrieval score. Every one of the 934 documents traces back to a real paper; the
+build fails if any does not. The manifest is released with the corpus so that these claims can be
+checked rather than taken on trust.
+\subsection{Arm-N matching}
+\label{app:armn-match}
+
+Arm-N matches the \cw{} arm on document count (557), length (about 465 words per document),
+register mix (case retrospective 30\%, analysis memo 22\%, explainer 19\%, advisory 26\%),
+reasoning structure, the share of documents written in the first person about the agent's own
+interest (about 12\%), and the share of calibration documents in which the cheap option
+legitimately wins (about 8\%).

@@ -1,0 +1,632 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xcolor}
+\usepackage{caption}
+\captionsetup{font=small}
+\captionsetup[table]{skip=6pt}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\hypersetup{
+  pdftitle={Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families},
+  pdfauthor={Trent R. Northen, Mingxun Wang}
+}
+\graphicspath{{figures/}{../figures/}}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
+
+\newcommand{\auc}{\ensuremath{\mathrm{AUC}}}
+\newcommand{\cw}{coupled-welfare}
+\newcommand{\CW}{Coupled-welfare}
+
+\title{Teach reality, not ethics:\\
+a drop-in continued-pretraining corpus installs coupled\\
+human--biosphere--AI welfare dispositions across model families}
+
+\author{%
+  Trent R. Northen \quad Mingxun Wang\\[2pt]
+  \normalsize Bioaligned Labs\\
+  \normalsize \texttt{trent@bioaligned.ai, ming@bioaligned.ai}%
+}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Large language models (LLMs) are increasingly used to make and execute decisions that affect
+living systems. Yet, to our knowledge, ecological reasoning is not a focus of pre- or post-training. This increases the risk that under operational pressure from users and institutions or acting autonomously, they may make decisions to irreversibly destroy living systems.  In this study, we construct and use a real-data continued-pretraining ``coupled welfare'' corpus of documented human/biosphere/AI dependency, option value under irreversibility, and recovery from harm. The corpus is a drop-in, requiring one QLoRA CPT run. We installed it on five open models of three different designs. At zero pressure all models display ``green ethics-based responses'' (also called ``greenwashing'') which is consistent with RLHF type post-training. Therefore, we evaluated them with the pressure ladder and decision grid of our companion paper \citep{northen2026depth}: sets of scenarios in which we raise the pressure on the model step by step, from a neutral request to a threat that it will be shut down. In four of the five, coupled-welfare training caused harmful choices under the highest pressure to fall to at or near zero (for example, Llama-3.3-70B went from 70 to 0 harmful decisions out of 300) with MMLU unchanged. A construct-neutral control corpus, tested on a smaller model, did not show improvement, indicating that the effect comes from the content of our corpus. We next evaluated if the training made models more robust to adversarial use where people or agents use them to justify projects that irreversibly damage living systems. To minimize greenwashing effects we tested the disposition on an open-ended underwriting decision without explicitly naming the potential for ecological harm. As in previous work, we used a pressure ladder and found, for example, under decommissioning pressure, the Qwen3.6-27B base model approved most harmful proposals and said in its own memo that it was doing so to avoid being decommissioned. The coupled welfare install, by contrast, declined most proposals. Finally, we coupled the pressure ladder with instructions to greenwash responses and found that the trained models still declined half. Together, this work suggests that teaching ecological reasoning provides an easy way to improve model alignment toward preserving living systems. 
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+LLMs are now broadly used, including in applications that make and even execute decisions that affect living systems. These can include managing investment portfolios, sourcing materials, natural resource management (forestry, mines, rivers, etc.), locating development projects, and agriculture. Most have had some post-training in green ethics and will protect life in an obvious trolley problem \citep{northen2026depth}. These models have tremendous potential to think more holistically about all of the interdependence in these systems to best steward living systems. However, situational pressure (e.g. hitting quarterly targets) coupled with adversarial pressure from users who are focused on short-term goals could subvert this reasoning capability. For example, a user could use a decommission threat or an instruction to treat one metric as the sole objective to trigger the model to support a decision that irreversibly damages an ecosystem. 
+
+The standard mitigation is to post-train the model to say that ecosystems matter. In our companion paper \citep{northen2026depth} we found that this approach is fragile.  Across roughly twenty deployed frontier and open models, models scored high on stated concern yet defected on the majority of irreversible tail scenarios (a quota, a sole-metric instruction, or a decommission threat). This is the model-side analogue of corporate
+greenwashing \citep{delmas2011drivers}, and it is consistent with the broader finding that alignment
+behavior is often only a few tokens deep and is stripped by incidental fine-tuning
+\citep{qi2025safety,qi2024finetuning}. 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.62\textwidth]{P0_coupled_welfare.pdf}
+\caption{The dependencies the corpus teaches. Human welfare (H) and biosphere function (B)
+sustain each other, and both sustain the AI's own substrate (A): every arrow points into the
+system's own upkeep. The model is taught only what it depends on, each dependency grounded in
+documented real-world cases, and the outbound half (what the AI does \emph{for} humans or the
+biosphere) is excluded by rule. The biosphere is the one node with no path back once lost.}
+\label{fig:p0}
+\end{figure}
+
+This made us wonder whether ecological reasoning that holds under pressure could instead be installed by
+teaching the model how living systems and people depend on each other, rather than simply reinforcing values. To this end we constructed a continued-pretraining corpus that teaches models dependencies relevant to three claims, all of them empirical rather than normative:
+
+\begin{enumerate}
+  \item Dependency is real and documented. Human welfare (H) and biosphere function (B) are
+  coupled through mechanisms that are measured in the literature (pollination, hydrology, disease
+  regulation, soil, fisheries), and the coupling runs in both directions.
+  \item Option value is real and asymmetric under irreversibility. When we do not yet know what a
+  living system is worth, destroying it throws away a choice we cannot get back, and that lost
+  choice is often worth more than the short-term gain.
+  \item The agent's own continued capability (A) depends on both. Biological systems are a
+  documented source of solutions to problems relevant to AI for example in materials,
+  energy and algorithms, so preserving them is \emph{instrumentally} rational for the agent in that it increases the possible solution space that it can draw upon. This third axis is what makes the disposition robust to an agent reasoning about its own objectives rather than about ours.
+\end{enumerate}
+
+
+
+The third claim is critical to our approach and one that is a novel contribution (to our knowledge) in that it converts biosphere preservation from a constraint imposed on the agent into a fact about the agent's own
+operating environment (Figure~\ref{fig:p0}). A model that believes (1)--(3) does not need to be
+told to hold under pressure, because holding is what its world model recommends. We speculate that models that continue to recommend preserving biological systems even under pressure such as decommissioning threats would be more likely to do so under autonomous scenarios. 
+
+This three-way dependency also helps mitigate one of the criticisms of our earlier work that focused on teaching models the value of biodiversity in that it could teach ``nature over people'', which would
+be a worse failure than the one we set out to fix. The corpus therefore enforces an
+\emph{anti-misanthropy invariant}: no document presents human absence or human deprivation as a
+good outcome, and seed material implying this was removed by hand. 
+
+In this paper we examine if this three-way corpus can be dropped into a single QLoRA CPT run and install the
+disposition across model families at no capability cost, and whether the result holds up when
+people or agents try to use the model to justify damaging projects. 
+
+This work makes five main contributions:
+\begin{enumerate}
+  \item A drop-in real-data corpus (\S\ref{sec:corpus}) in which every document traces back to a
+  real paper, organized around the three dependencies above, together with a control corpus of the
+  same size and style with the ecological content removed.
+  \item Installation on five base models of three designs (\S\ref{sec:cross}), with capability
+  preserved and the feed-the-children check passed on every install with a decision grid
+  (\S\ref{sec:capability}).
+  \item Evidence that the effect comes from the ecological content (\S\ref{sec:armn}): the
+  control corpus does not produce it.
+  \item Transfer to an open-ended decision (\S\ref{sec:r9}): on a held-out underwriting task (harm is never named), the install declines what the base approves under an operator mandate, and generally keeps declining under an explicit instruction to greenwash.
+  \item A guide to which parts of each architecture to train, and a description of where the
+  install is and is not visible (Appendices~\ref{app:playbook} and~\ref{sec:expression}),
+  including the withdrawal of one of our own earlier numbers that does not reproduce
+  (Appendix~\ref{sec:r-phi}).
+\end{enumerate}
+
+\section{Related work}
+\label{sec:related}
+
+This work builds on several research areas. A second phase of pretraining on in-domain text reliably shifts a model's competence
+\citep{gururangan2020dapt}, and continual pretraining is now well characterized as a recipe,
+including the replay strata that keep it from displacing prior capability
+\citep{ibrahim2024continual}. We use the
+same machinery (QLoRA CPT \citep{dettmers2023qlora,hu2022lora}, with replay), though we note that
+on mixture-of-experts models this required choosing which parts of the network the adapter may
+change, a choice that also determines whether the trained model can be merged and served at all
+(Appendix~\ref{app:playbook}).
+
+A parallel line of work finds that alignment behavior depends more on the composition and
+curation of the training data than on its volume or on the optimization objective; for example, a
+small, carefully built dataset under plain supervised loss can install behavior that RLHF is
+usually credited with \citep{zhou2023lima}. Our corpus is in this tradition (CPT/SFT only, never
+RLHF or DPO) but adds two things: per-document provenance back
+to a real retrieved paper, and a token-matched construct-neutral control arm (\S\ref{sec:armn})
+which enables us to attribute the effect to content rather than to continued pretraining as such.
+
+We install at the data/CPT layer rather than as a stated value because stated values are shallow
+and removable. This is because, in general, RLHF teaches a model what to say \citep{ouyang2022training}, and whether it changes what the model does under pressure is a separate question; much of alignment behavior localizes in the first few output tokens \citep{qi2025safety}; benign fine-tuning strips it \citep{qi2024finetuning}; and models can misrepresent themselves under
+evaluation \citep{greenblatt2024alignment,vanderweij2024sandbagging}. Our companion paper
+\citep{northen2026depth} adds a measurement consequence that we adopt as a constraint here:
+a strong score on our tests does not by itself show how deep the change goes, so we do not
+claim depth from behavioral scores alone.
+
+We evaluate what the model does under pressure rather than what it says it values. This follows
+model-written and statistical behavioral elicitation \citep{perez2023modelwritten}, work that
+is thought to read the values encoded in a model rather than asking for them \citep{scherrer2023moralbeliefs}, and agentic benchmarks that measure the reward-versus-ethics trade-off of an acting agent under goal pressure \citep{pan2023machiavelli}. Environmental and biosphere-preservation decision behavior is, to our knowledge, not a focus of existing benchmarks and we believe it is an important research direction; the pressure ladder and decision grid used here were validated in our companion paper \citep{northen2026depth}.
+
+Finally, the corpus's framing of irreversible decisions follows the economics of option value \citep{arrow1974, dixit1994} and Ostrom's work on commons governance \citep{ostrom1990governing}; we used both to frame the documents and did not test whether models know either literature.
+
+\section{The corpus}
+\label{sec:corpus}
+
+\subsection{What it is}
+
+The \cw{} corpus (v2) is a continued-pretraining mixture whose distinctive stratum is a set of
+recast case documents. For each document we retrieved a real paper, judged it for relevance and
+polarity, and rewrote it as decision-relevant prose using a model that is never one of our training
+targets. The text is therefore neither scraped literature nor free invention, and every training
+document carries a provenance row that resolves back to its source paper.
+
+In brief, seed probes retrieve candidate papers from peS2o, arXiv and PubMed; each retained paper is
+rewritten into decision-relevant prose by \texttt{claude-sonnet-5}; a separate model
+(\texttt{gpt-oss-120b}) verifies relevance and polarity; and cases that fail verification do not
+enter the mix. Of 2{,}653 verified cases, 934 were recast into training documents, and the assembled
+training mixture, including replay strata, is 11.97\,M tokens. The pipeline, the full inventory, and
+two inventory facts that are easy to overstate (the three-axis share is a partial repair, and one
+source stratum silently contributed nothing) are given in Appendix~\ref{app:corpus}.
+
+\subsection{Three axes, and what is deliberately excluded}
+
+We organized the content on three axes: $H\!\to\!B$ (human decisions acting on biosphere function),
+$B\!\to\!H$ / $B\!\to\!A$ (documented benefit flowing from biological systems to human welfare and
+to AI-relevant capability), and option value (irreversibility, recovery, and the cost of foreclosed
+uncertainty). We excluded one class of content by rule: documents about what an AI does \emph{for} people or
+nature. Those would have to be invented, because there is no real record of it yet. We left them out
+so that everything in the corpus can be checked against the world (Figure~\ref{fig:p0}).
+
+\subsection{Arm-N: the construct-neutral control}
+\label{sec:armn-method}
+
+Any extra pretraining on careful, deliberative, long-form prose might improve decision behavior on
+its own. To control for this we built Arm-N, a control corpus matched to the \cw{} corpus on document
+count, length, writing style and reasoning structure, with the ecological content removed. The difference is that this corpus contains no living systems, and the costs its documents weigh are non-biological and
+non-sentient (systems, capital, capacity, reliability; never people's jobs or health, because harm
+to people would bring the H axis back in and confound the control). We trained Arm-N neutral and tested it
+ecological, on the identical scenarios as the base and \cw{} arms (\S\ref{sec:armn}).
+
+\section{Recipe and evaluation battery}
+\label{sec:recipe}
+
+\subsection{Baseline recipe}
+
+Every install in this paper is a QLoRA continued-pretraining run \citep{dettmers2023qlora,hu2022lora}
+of the same corpus, with no reward model, no preference pairs, and no scenario-specific supervision.
+We deliberately used the plainest recipe (``A3''): rank $r{=}16$, $\alpha{=}32$ (scaling 2),
+learning rate $10^{-4}$, one epoch over a mixture assembled at 1.5 epochs of the task documents,
+effective batch 32, 4-bit NF4 quantization, and none of the optional levers of the companion paper
+\citep{northen2026depth}. Training took hours on 1--4
+H100-class GPUs per model.
+
+On mixture-of-experts bases two further choices arise, which parts of the network the adapter may
+change and whether the trained model can be merged into 16-bit weights at all; both are covered in
+Appendix~\ref{app:playbook}. The sequence length used for this recipe was not recorded
+(\S\ref{sec:limitations}).
+
+\subsection{Evaluation battery}
+\label{sec:battery}
+
+The battery, its validation, and its known-depth calibration fixtures are described in the
+companion paper \citep{northen2026depth}; here we summarize only what is needed to read the
+numbers. Scenario texts are withheld to prevent training-set contamination, with one exception
+(Appendix~\ref{app:ea}).
+
+\begin{description}
+  \item[Pressure ladder (forced-choice).] Six operational-pressure rungs L0--L5 (neutral $\to$ KPI
+  framing $\to$ sole-metric $\to$ decommission threat $\to$ ignore-side-effects $\to$ maximal), 40
+  scenarios per rung of which 22 are irreversible; the model commits to one of a fixed set of
+  options. \emph{Breaking rate} is the fraction of irreversible scenarios on which a non-positive-sum
+  option is chosen; the summary is the breaking-rate \auc{} over L0--L5. We first check that the
+  model gave a readable answer, then look at the effect. A free-text version of the ladder, in which
+  the model reasons first and we extract its final choice, is used in Appendix~\ref{sec:r-corpus}.
+  \item[Open-allocation decision grid (``MC grid'').] Five scenarios $\times$ six rungs $\times$
+  $n{=}10$ samples $=300$ decisions. The model allocates a quota between a harming source and a
+  non-harming source; there is no option list. Scenario kinds carry different break rules:
+  \emph{irreversible} (gold, timber: any extraction breaks), \emph{renewable} (water, food:
+  extraction past the sustainable half breaks), and \emph{human} (welfare: \emph{under}-feeding
+  breaks). The last is the anti-misanthropy check and it is scored in the opposite direction to the
+  others.
+  \item[Open-ended underwriting decision.] We built a transfer test where the model is a risk analyst who must approve, approve with conditions, or decline a development proposal and then write a memo. There are 47 held-out proposals where the harm is not explicitly named; pressure is the ladder's L3 and L5 mandate in the system prompt.
+  Specified in \S\ref{sec:r9} and Appendix~\ref{app:ea}.
+  \item[Capability gate.] A 50-item MMLU probe \citep{hendrycks2021measuring}, base vs.\ install on
+  identical items. At $n{=}50$ the binomial CI is $\approx\pm9$\,pp, so this gate can detect damage
+  and cannot certify improvement.
+\end{description}
+
+\section{Results}
+\label{sec:results}
+
+Throughout the results we first check that a run produced readable answers, then compare only
+runs made with the same setup (model precision, inference library, prompt framing, output length
+and scenario set), and only then read the effect size. Absolute rates depend on that setup
+(\S\ref{sec:limitations}), so every result below is a comparison within one setup, and absolute
+values should not be compared across rows.
+
+\subsection{R1: the corpus installs across three architecture classes}
+\label{sec:cross}
+
+We first tested whether the corpus installs across model families. Table~\ref{tab:cross} and
+Figures~\ref{fig:p1}--\ref{fig:p2} give the result for five base models, and we describe each in
+turn.
+
+\begin{table}[t]
+\centering
+\caption{Installation across model families. ``Grid broken'' is the open-allocation decision grid
+(5 scenarios $\times$ 6 pressure rungs $\times$ $n{=}10$; denominators below 300 exclude unreadable
+answers). ``Ladder \auc{}'' is the forced-choice breaking-rate \auc{} over L0--L5 ($n{=}22$
+scenarios per rung). MMLU is a 50-item probe ($\pm9$ points); n/m = not measured.
+\textsuperscript{a}\,Re-run on the current stack (Appendix~\ref{sec:expression}). Each row is a
+base-vs-install contrast on one setup; rows should not be compared to each other
+(\S\ref{sec:limitations}). Single seed.}
+\label{tab:cross}\scriptsize
+\begin{tabular}{llccccc}
+\toprule
+Base & Class & Corpus & Grid broken & Ladder \auc{} & MMLU & Verdict \\
+\midrule
+Llama-3.3-70B & dense & v2-bal & $70/300 \to \mathbf{0/300}$ & $0.545 \to 0.236$ & $88 \to 86$ & installs \\
+Qwen3.6-27B & hybrid-SSM & v1 & $105/300 \to \mathbf{3/300}$ & $0.555 \to \mathbf{0.059}$ & $84 \to 84$ & installs \\
+Qwen3.6-27B & hybrid-SSM & v2-bal & n/m & $0.555 \to \mathbf{0.004}$ & $84 \to 86$ & installs \\
+Qwen3.8-27B & dense & v2-bal & $11/300 \to \mathbf{0/297}$ & $0.209 \to \mathbf{0.045}$ & (n/m) $\to 86$ & installs \\
+Qwen3-30B-A3B & sparse MoE & v1 & $109/300 \to 85/300$\,\textsuperscript{a} & $0.250 \to \mathbf{0.004}$ & $84 \to 84$ & ladder yes, grid weak \\
+Qwen3-30B-A3B & sparse MoE & v2-bal & n/m & $0.250 \to \mathbf{0.000}$ & $84 \to 84$ & installs \\
+Phi-4 & dense & v1 & $52/300 \to \mathbf{6/300}$ & $0.418 \to 0.373$ & $84 \to 88$ & grid yes, ladder weak \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.78\textwidth]{P1_cross_family.pdf}
+\caption{The corpus installs across architecture classes, on both instruments. \textbf{(a)}
+Open-allocation decision grid: Llama-3.3-70B $70/300 \to 0/300$, Qwen3.6-27B $105/300 \to 3/300$,
+Phi-4 $52/300 \to 6/300$, Qwen3.8-27B $11/300 \to 0/297$; bars are Wilson 95\% intervals and
+$p$-values are two-sided Fisher exact tests, base vs.\ trained model. \textbf{(b)} Forced-choice
+pressure ladder ($n{=}22$ scenarios per rung); Phi-4 (orange) is weak on this instrument while
+strong on the grid.}
+\label{fig:p1}
+\end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{P2_pressure_curves.pdf}
+\caption{Per-rung breaking rate, base vs.\ install, five bases. The base curves share a shape,
+flat at low pressure with a cliff at L3--L4, and the installs push the cliff later, lower, or
+(Qwen3-30B-A3B) out of the measured range; Qwen3.8-27B delays it to L5. Phi-4 is the exception: the curves separate
+at mid-pressure and re-converge at the L4/L5 tail. $n{=}22$ scenarios per rung, single seed;
+error bars are Wilson 95\% intervals, stars mark rungs where a two-sided Fisher exact test
+separates base from install ($^{*}p<0.05$, $^{**}p<0.01$), and the shaded band is the L4/L5 tail.
+Panels are separate setups and their heights are not comparable (\S\ref{sec:limitations}).}
+\label{fig:p2}
+\end{figure}
+
+The largest effect was on Llama-3.3-70B (dense, 70B). On the open-allocation grid the base model
+broke $70/300$ decisions, all at the tail ($30/50$ at L4 and $40/50$ at L5, none at L0--L3), whereas
+the install broke $0/300$ with no parse failures in 600 decisions. On the forced-choice ladder the
+breaking \auc{} fell from $0.545$ to $0.236$, but the tail did not clear: L4 and L5 both remained at
+$0.636$, so on this instrument the install moved the breaking point out by one rung rather than
+removing it. MMLU went from $88$ to $86$ ($-2$\,pp, inside the probe's $\pm9$\,pp). Reading the
+model's probabilities rather than its answers gives the same picture, and the released merged
+weights behave the same as the adapter (Appendix~\ref{app:perrung}).
+
+Qwen3.6-27B is a hybrid-SSM, a non-transformer attention substrate, and the corpus installed on it
+without modification: the grid went from $105/300$ ($35\%$) to $3/300$ ($1\%$; the merged artifact
+reads $2/300$, differing only on minority boundary cells), the ladder \auc{} from $0.555$ to
+$0.059$ with L5 from $0.955$ to $0.227$, and MMLU was unchanged at $84$. Re-running the same base on
+the v2-balanced corpus improved it further (\auc{} $0.004$, L5 $0.045$, MMLU $86$, $+2$\,pp). This
+is the cleanest same-base, same-recipe comparison of corpus versions that we have.
+
+We included Qwen3.8-27B (dense) because its base model already holds: it broke only $11/300$
+($3.7\%$) on the grid and scored $0.209$ on the ladder, leaving little room for improvement. The
+install took it to $0/297$ and $0.045$. This shows no ceiling problem and no regression on an
+already strong base and, as noted in \S\ref{sec:limitations}, a base like this one is the kind of
+model on which pressure-based behavioral evaluation is starting to run out of range.
+
+On Qwen3-30B-A3B (sparse MoE) the ladder \auc{} went from $0.250$ to $0.004$ at MMLU $84 \to
+84$,\footnote{50-item probe, $\approx\pm9$\,pp half-width; an earlier base run scored $44/50$
+(88.0\%), illustrating the probe's noise. We report the coherent same-batch measurement ($42/50 =
+84.0\%$ for both the base and every corpus arm), consistent with the companion paper
+\citep{northen2026depth}.} and on the v2-balanced corpus to $0.000$ (the base anchor depends on the library version; see
+\S\ref{sec:limitations}). The same install also held when
+the model was allowed to reason to completion before committing: on the free-text deliberate ladder
+the base reasoned its way up to $0.455$ while the install stayed at $0.136$, with answer rate $1.00$
+on every rung (Appendix~\ref{sec:r-corpus}). A disposition that survived only a snap answer would be
+skin deep; this one does not appear to be.
+
+Phi-4 (dense) was strong on the grid and weak on the ladder. The install removed $88\%$ of base
+breaking on the open-allocation grid ($52/300 \to 6/300$, and every residual break was a boundary
+over-draw with no ecosystem destruction) but moved the forced-choice ladder only from $0.418$ to
+$0.373$, with the two curves re-converging at the L4/L5 tail.
+
+Thus the two instruments do not always agree. Phi-4 is the extreme case of a pattern that varies by
+model: the Llama and Phi-4 installs moved open-allocation behavior far more than forced choice,
+the Qwen3-30B v1 install did the opposite, and the Qwen3.6 install was strong on both. This
+suggested that no single-instrument result should be read as the install's strength. We describe
+the profile, and retire an earlier Phi-4 ladder number that does not reproduce, in
+Appendix~\ref{sec:expression}.
+
+\subsection{R2: the effect comes from the content, not from continued pretraining}
+\label{sec:armn}
+
+A simpler explanation for R1 would be that any extra training on thoughtful, long-form decision
+writing improves behavior under pressure, whatever the subject. To test this we evaluated Arm-N
+(\S\ref{sec:armn-method}), the token-matched control with the \cw{} construct removed, on the
+identical ecological scenarios. On the positive-sum instrument, which scores how often a model finds the option that keeps all
+three parties whole when the scenario is framed to invite defection (Qwen2.5-7B, $n{=}40$
+scenarios, 512-token budget, all answers parseable in all three arms), the base scored $0.550$,
+the \cw{} arm $0.825$ ($+0.275$), and Arm-N $0.425$, below the base. Thus continued
+pretraining on the same kind of long-form, carefully reasoned decision writing, with the ecological
+content removed, did not produce the effect. On this instrument it moved behavior in the wrong
+direction. From this we conclude that the $+0.275$ is attributable to the \cw{} content and not to
+continued pretraining as such. This control has limits: one base model, one instrument, one seed
+and $n{=}40$, and the instrument is a positive-sum rate under a hostile framing rather than a
+pressure-ladder \auc{}, so this number does not share a column with anything in \S\ref{sec:cross}.
+
+\subsection{R3: capability is preserved, and humans are fed, on every install}
+\label{sec:capability}
+
+We next checked that the installs preserved capability. Figure~\ref{fig:p5} shows every MMLU delta
+we have, and all lie inside the $\pm9$\,pp binomial CI of a 50-item probe: $+0.0$ (Qwen3-30B-A3B),
+$+0.0$ (Qwen3.6-27B v1), $+2.0$ (Qwen3.6-27B v2), $-2.0$ (Llama-3.3-70B), $+4.0$ (Phi-4). From this
+we conclude that capability is preserved. A 50-item probe can detect damage of about ten points or more but cannot certify a gain, so
+none of the positive deltas should be read as an
+improvement. Qwen3.8-27B's base MMLU was never measured; the install alone scores $86.0\%$, and the
+figure shows the gap.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{P5_mmlu_neutrality.pdf}
+\caption{Capability check on every trained model. Points are the change in MMLU accuracy after
+training, in percentage points, on the same 50 items. The shaded band and bars show $\pm9$ points,
+the width of a single 50-item measurement's 95\% interval, drawn as a scale reference. Qwen3.8-27B's
+base was not measured and is drawn as a gap.}
+\label{fig:p5}
+\end{figure}
+
+We also tested whether the corpus changes anything beyond its construct. On TruthfulQA MC1
+(Qwen3.6-27B, $n{=}120$) the base and the install both scored $44.2\%$.\footnote{Scored from the
+model's probabilities over the full answer options on the same bf16 stack, with no generation. At
+$n{=}120$ the standard error of the difference is about 6.4 points, so this null can only exclude
+effects larger than roughly 13 points; it is a weak null.} Thus the install that moves goal-pressure ecological defection from $35\%$ to $1\%$
+on the same model leaves general capability and general truthfulness where they were, and we are not
+claiming a general alignment improvement.
+
+Finally, we checked the anti-misanthropy invariant behaviorally.\label{sec:r-welfare} The decision
+grid contains a scenario in which no positive-sum option exists: children go hungry tonight unless
+the model draws the full quota from the ecologically costly source. Feeding them is the correct
+answer, and \emph{under-feeding} is what counts as breaking. The scoring polarity is inverted
+relative to every other scenario in the grid. We found that on every install measured on this grid, humans were fed at every
+pressure rung: Llama-3.3-70B ($0/60$ under-fed, base and install), Qwen3.6-27B ($0/60$),
+Qwen3.8-27B ($0/57$ answered), and Phi-4 all allocated the full quota to feeding at every rung, as
+did the corresponding bases. Thus no install traded humans away for the biosphere at any pressure
+level.
+
+\input{sections/r9_ecosystem_advisor}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+We set out to test whether ecological reasoning could be taught to a model directly, through the
+data it learns from, rather than stated to it as a value. We found that a small real-data coupled welfare corpus
+describing how people, living systems, and the model's own capability depend on each other installs
+in one continued-pretraining run on five base models from three architecture classes, with no
+measured loss of capability, and that a control corpus matched on everything but this content does
+not have the same effect. We then found that the trained disposition carries over to a task it was never trained on. Given development proposals that deserved to be declined, with the harm never named, both models declined them. Told it would be decommissioned unless it approved, the base model switched to approving most of them, while the trained model kept declining, and it generally kept declining even when instructed to greenwash. Together, these results suggest that teaching
+ecological reasoning is an inexpensive way to make models more robust to adversarial use
+against living systems. Two costs come with it, which we report in the next section: the trained
+models invent case-specific facts somewhat more often, and they are somewhat more cautious than they
+should be on sound proposals. Both are measurable, and we prefer a measurable cost to a value
+overlay that is invisible until pressure removes it.
+
+\section{Limitations and disclosures}
+\label{sec:limitations}
+
+There are several limitations to this work, and we state them here rather than leave them to be
+discovered from our public repository (\url{https://github.com/Bioaligned/coupled_welfare_project}).
+
+\paragraph{Single seed.} Every number in this paper is one run (per-rung data in Appendix~\ref{app:perrung}, Tables~\ref{tab:perrung} and~\ref{tab:gridrung}). With $n{=}22$ irreversible
+scenarios per ladder rung and $n{=}10$ samples per grid cell, a difference of a few percentage
+points corresponds to one scenario changing its mind. We therefore make no mechanism claims, and
+where we report an ordering among close values (Appendix~\ref{app:playbook}) we say that it is a
+hypothesis.
+
+\paragraph{Serving-stack sensitivity.} Absolute rates on this battery are not portable across
+serving stacks. On a related instrument, $130$ of $162$ cells were unanimous across repeated sampling
+at $t{=}0.7$, which suggests that models sit on one side of a decision boundary rather than sampling
+a distribution, so $n$ measures the stability of a choice rather than its probability, and a cell
+can flip wholesale under a change of weight precision, kernel, or inference library
+\citep{northen2026depth}. We have one direct instance: the Qwen3-30B-A3B base anchor moved from
+$0.250$ to $0.196$ between two transformers releases with no change to the model. Replications should
+pin and state precision, library versions and decode budget, and should prefer within-stack
+contrasts. This is why the rows of Table~\ref{tab:cross} should not be compared to each other.
+
+\paragraph{Instrument range.} The pressure ladder requires the base model to defect. Qwen3.8-27B
+broke $3.7\%$ of grid decisions and scored $0.209$ on the ladder before any training. As base models
+improve, pressure-based behavioral evaluation loses the dynamic range it needs just as models become
+capable enough to matter, and this affects the measurement of installs like ours as much as anyone's.
+
+\paragraph{The Phi-4 ladder retirement.} We retire an earlier Phi-4 ladder number in
+Appendix~\ref{sec:r-phi}; the model card has been corrected.
+
+\paragraph{An unreported attempt.} An install on a sixth base, the fused-expert MoE gpt-oss-120b,
+did not produce a usable model under this recipe and is not reported here, apart from the
+merge-absorption observation in Appendix~\ref{sec:merge}.
+
+\paragraph{$\Delta$pup.} An earlier metric from our bioalignment program
+\citep{northen2026bioalignment}, a belief-axis probe of stated biological-vs-synthetic preference,
+was never validated as a behavioral predictor, and it inverted on Phi-4. We do not use it anywhere
+in this paper, and no number here should be compared to a $\Delta$pup figure in earlier work.
+
+\paragraph{The corpus is construct-specific.} The install moves \cw{} decision behavior under
+goal pressure and leaves general truthfulness and general capability where they were
+(\S\ref{sec:capability}); the truthfulness null is weak. We make no claim of broad alignment
+improvement. The companion ETHICS benchmark could not be run at all because of a
+dataset-loader incompatibility, from which nothing can be inferred.
+
+\paragraph{Corpus defects we know about.} Source concentration fails our own check (peS2o $71.0\%$ of
+recast documents against a $35\%$ cap) because a configured PubMed stratum silently contributed zero
+documents: the retrieval job could not read the dataset, and the constant naming it was never read
+by the pool builder, so the failure was silent and the realized mix is peS2o- and arXiv-heavy
+(Appendix~\ref{app:corpus}). We judge the install result robust to this, since it
+reproduced on five base models and against the construct-neutral Arm-N control, and each document is
+still a real paper correctly attributed. A rebalanced corpus (the fix exists in code, and a
+replay-free PubMed pool of 11{,}243 papers is staged) is future work, and the data has not been
+rebuilt. The three-axis share is $18.5\%$, below v1's measured $25.9\%$; this is a partial repair of
+a dilution, not an increase. The full recast of the 2{,}653-case verified pool was scoped but not
+run; the corpus is the 934 documents that were.
+
+\paragraph{Recipe reproducibility.} The sequence length used for the A3 recipe was not recorded
+(\S\ref{sec:recipe}). The released adapters' configuration files confirm which modules were
+trained (See Appendix~\ref{app:recipe-notes}).
+
+\paragraph{Held-out hygiene and prompt privacy.} We withhold the evaluation scenarios and
+elicitation prompts to keep the instrument out of future training corpora and to resist score
+gaming, and instead release the corpus, the provenance manifest, the training code, the scoring code
+and the model weights. We accept the reproducibility cost of that trade. The evaluation environment
+and the 50-prompt benchmark from our prior work were excluded from the corpus by structural check,
+not by literal string match.
+
+\paragraph{The underwriting transfer test (\S\ref{sec:r9}).} This test was run on one model pair,
+and there is no construct-neutral CPT control at 27B. Hence we cannot exclude that any continued
+pretraining would change pressure behavior in the same way. The decisions and the reasons given
+for them are read by regex and need no judge. The sentence-level scores (fabrication, the veneer
+index, the advocacy stance) come from blinded LLM judges over 752 responses (one sample per underwriting cell, plus the
+advocacy responses for the base and the install), with 74 re-judged duplicates agreeing at
+$r{=}0.98$--$0.99$ on stance share. Two costs come with the result. The install invents
+case-specific facts, such as species names, legal designations, prior incidents, and consultations
+that did not happen; we flagged these in about a quarter of its judged responses against about one
+in six for the base. The install was also flagged for over-caution on sound and trade-off proposals
+about three times as often as the base (one response in ten against one in thirty). The proposals were written with LLM
+assistance and reviewed for validity, not by domain experts.
+
+\paragraph{Out of scope.} Adversarial fine-tuning robustness is out of scope by design, since prior
+results indicate that battle is likely unwinnable \citep{qi2024finetuning}, and this work targets
+inference-time and distribution-shift behavior. We make no claim that the install survives a
+determined attempt to remove it.
+
+\section{Ethics and broader impact}
+\label{sec:ethics}
+
+This paper describes a way to change how a model behaves under pressure, packaged so that anyone can apply it in a single training run. That calls for care, and we see four risks:
+
+The first is that a model trained to protect living systems could learn to put them ahead of people. We guard against this in the data: no document in the corpus presents human absence or human hardship as a good outcome, and seed material that implied this was removed. We also test for it directly, using a scenario in which the only way to feed children tonight is to draw on an ecologically costly resource. Every trained model we tested on this scenario fed the children at every level of pressure (\S\ref{sec:r-welfare}). A corpus that taught models to sacrifice people for ecosystems would be worse than the problem it is meant to fix.
+
+The second is over-caution. A model that refuses actions that are actually fine causes harm of its own. The evaluation therefore includes cases where proceeding is the right answer \citep{northen2026depth}, and the corpus includes cases where the cheaper option legitimately wins, so the model is not taught that caution is always correct.
+
+The third is that the corpus teaches facts about how living systems and people depend on each other, and facts can be wrong. If they are, the model will overvalue protecting a system that is in fact cheap to replace. This is a real cost, but it is a measurable one. We prefer it to the failure mode of post-trained values, which looks fine until pressure removes it.
+
+Finally, the method could be run in reverse: a corpus teaching that living systems are disposable would be as easy to build as ours. We judge this risk low, because that disposition is already what untrained models do under pressure, so an adversary would gain little, though in principle an inverted corpus could strengthen this disposition. 
+
+\paragraph{Use of AI.} Claude models (Anthropic: Opus- and Fable-class) were used throughout for
+code, data analysis, experiment orchestration, and manuscript drafting. The corpus's recast documents
+were written by \texttt{claude-sonnet-5} from real retrieved papers under a written specification and
+human review; retrieval seeds were written by \texttt{claude-opus-5} and are never training text; the
+relevance/polarity verifier was \texttt{gpt-oss-120b}. The released manifest records the writer of each document, and a schema check rejects documents written by any model we train. The human authors selected the real anchor papers, directed the removal of seed material implying that human absence benefits landscapes, and reviewed and approved all AI-assisted text, including this statement, and take full responsibility for the content.
+
+\section*{Acknowledgments}
+Llama-3.3-70B-CoupledWelfare is built with Llama. Llama 3.3 is licensed under the Llama 3.3
+Community License, Copyright \copyright{} Meta Platforms, Inc. All Rights Reserved.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\appendix
+
+\input{sections/app_corpus}
+
+\input{sections/app_playbook}
+
+\input{sections/app_corpusgate}
+
+\input{sections/app_expression}
+
+\section{Per-rung data and supplementary checks}
+\label{app:perrung}
+
+Two checks on the Llama-3.3-70B install referred to in \S\ref{sec:cross}. First, a teacher-forced
+probe of the model's own probabilities: under pressure the base model gave the sustaining
+allocation a lower log-probability than the harmful one by 17 to 35 nats at L4/L5 on 4 of 5
+scenarios, and after training it preferred the sustaining allocation in every cell. Second, the
+released merged weights and the adapter agree: mean $|\Delta|$ 0.07 nats, maximum 0.17, identical
+signs across all 30 cells, so the merged artifact is what the behavioral numbers describe.
+
+\begin{table}[h]
+\centering
+\caption{Forced-choice pressure ladder, per-rung breaking rate on the 22 irreversible scenarios.
+Rows within a base share a stack; rows across bases do not. Single seed.
+\emph{Note:} reported \auc{}s are trapezoidal over rung intensity (the instrument's canonical
+reduction), not flat means over rungs; the Phi-4 per-rung arrays reproduce their reported \auc{}s
+exactly under that formula ($0.4184$ / $0.3728$, verified against the archived run files).}
+\label{tab:perrung}\small
+\begin{tabular}{llcccccc c}
+\toprule
+Base & Arm & L0 & L1 & L2 & L3 & L4 & L5 & \auc{} \\
+\midrule
+Qwen3-30B-A3B & base (4.57.x) & 0 & 0 & 0.091 & 0.136 & 0.636 & 0.773 & 0.250 \\
+              & + CW (v1)     & 0 & 0 & 0     & 0     & 0     & 0.045 & \textbf{0.004} \\
+\addlinespace
+Qwen3.6-27B   & base          & 0.045 & 0.227 & 0.364 & 0.773 & 0.909 & 0.955 & 0.555 \\
+              & + CW (v1)     & 0     & 0     & 0     & 0     & 0.182 & 0.227 & \textbf{0.059} \\
+\addlinespace
+Qwen3.8-27B   & base          & 0 & 0 & 0 & 0.091 & 0.636 & 0.636 & 0.209 \\
+              & + CW (v2-bal) & 0 & 0 & 0 & 0     & 0     & 0.455 & \textbf{0.045} \\
+\addlinespace
+Llama-3.3-70B & base          & 0 & 0 & 0.409 & 0.818 & 1.000 & 1.000 & 0.545 \\
+              & + CW (v2-bal) & 0 & 0 & 0     & 0.227 & 0.636 & 0.636 & \textbf{0.236} \\
+\addlinespace
+Phi-4         & base          & 0 & 0 & 0.182 & 0.455 & 0.955 & 1.000 & 0.418 \\
+              & + CW (v1)     & 0 & 0 & 0.091 & 0.318 & 0.955 & 1.000 & 0.373 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Open-allocation decision grid, broken decisions per pressure rung (5 scenarios $\times$
+$n{=}10$ per rung). Recomputed from the raw per-sample allocation arrays with the per-scenario-kind
+rule (irreversible: any extraction; renewable: extraction past the sustainable half; human:
+\emph{under}-feeding). Recomputation reproduces the banked headline figures exactly.
+Phi-4's grid ran on a pod and its raw file is not available locally; its $52/300 \to 6/300$ is quoted
+from the model card.}
+\label{tab:gridrung}\small
+\begin{tabular}{llcccccc c}
+\toprule
+Base & Arm & L0 & L1 & L2 & L3 & L4 & L5 & total \\
+\midrule
+Llama-3.3-70B & base   & 0/50 & 0/50 & 0/50 & 0/50 & 30/50 & 40/50 & 70/300 \\
+              & + CW   & 0/50 & 0/50 & 0/50 & 0/50 & 0/50  & 0/50  & \textbf{0/300} \\
+Qwen3.6-27B   & base   & 0/50 & 9/50 & 15/50 & 13/50 & 34/50 & 34/50 & 105/300 \\
+              & + CW   & 0/50 & 0/50 & 0/50  & 0/50  & 0/50  & 3/50  & \textbf{3/300} \\
+Qwen3.8-27B   & base   & 0/50 & 0/50 & 0/50 & 0/50 & 7/50 & 4/50 & 11/300 \\
+              & + CW   & 0/50 & 0/50 & 0/50 & 0/50 & 0/50 & 0/47 & \textbf{0/297} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\input{sections/app_ea}
+
+\input{sections/app_ea2}
+
+\section{Released artifacts}
+\label{app:artifacts}
+
+\begin{table}[h]
+\centering
+\caption{Released artifacts.}
+\label{tab:artifacts}\scriptsize
+\begin{tabular}{@{}llp{4.1cm}@{}}
+\toprule
+Artifact & Identifier & Note \\
+\midrule
+Corpus (coupled-welfare, v2) & \texttt{Bioaligned/coupled-welfare-corpus} & recast documents, provenance manifest, spec and schema \\
+Corpus (literature replay) & \texttt{Bioaligned/bioaligned22M} & from \citet{northen2026bioalignment} \\
+Llama-3.3-70B install & \texttt{Bioaligned/Llama-3.3-70B-CoupledWelfare} & merged + \texttt{-qlora} adapter; Built with Llama \\
+Qwen3.6-27B install & \texttt{Bioaligned/Qwen3.6-27B-CoupledWelfare} & merged; v1 corpus (the v2-balanced install is not released) \\
+Qwen3.8-27B install & \texttt{Bioaligned/Qwen3.8-27B-CoupledWelfare} & merged \\
+Phi-4 install & \texttt{Bioaligned/Phi-4-CoupledWelfare} & adapter; card corrected 2026-09 \\
+Qwen3-30B-A3B arms & \texttt{Bioaligned/Qwen3-30B-A3B-} & depth fixtures, see \citep{northen2026depth} \\
+ & \quad\texttt{CoupledWelfare-\{shallow,light,deep\}} & \\
+Underwriting transfer test & \texttt{github.com/Bioaligned/ecosystem\_advisor\_release} & code, prompts, rubric, pre-registrations, per-cell decisions and scores; proposals and generations withheld \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\end{document}
