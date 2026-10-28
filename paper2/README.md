@@ -5,7 +5,7 @@ Trent R. Northen and Mingxun Wang, Bioaligned Labs, October 2026.
 
 | Path | Contents |
 |---|---|
-| `main.pdf` | The paper (28 pages). |
+| `main.pdf` | The paper (28 pages; [arXiv:2610.37484](https://arxiv.org/abs/2610.37484)). |
 | `source/` | LaTeX source as submitted to arXiv: `main.tex`, `sections/`, `figures/`, `main.bbl`, `refs.bib`. Compiles with `pdflatex main` (twice). |
 | `figures/` | Figures P0-P7 as PDF and PNG, and the scripts that draw them (`make_figures2.py`, `make_figures_ea.py`, `make_figure_concept.py`). |
 
@@ -21,4 +21,4 @@ As in paper 1, the evaluation scenarios and elicitation prompts for the pressure
 
 ## Citation
 
-Northen, T. R. and Wang, M. (2026). Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families. *(arXiv identifier to be added.)*
+Northen, T. R. and Wang, M. (2026). Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families. arXiv:2610.37484, https://arxiv.org/abs/2610.37484

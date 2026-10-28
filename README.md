@@ -11,7 +11,7 @@ scenarios are withheld** (see *What's withheld*, below).
 | | Paper | Where | Materials in this repo |
 |---|---|---|---|
 | **1** | *Beyond the greenwash: do LLMs' ecologically sound decisions hold up under pressure?* (Oct 2026) | [arXiv:2610.16043](https://arxiv.org/abs/2610.16043) | [`paper/`](paper/), [`figures/`](figures/), [`code/`](code/), [`data/`](data/), [`methods/`](methods/) |
-| **2** | *Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families* (Oct 2026) | arXiv: pending | [`paper2/`](paper2/) (paper, LaTeX source, figures and figure scripts) |
+| **2** | *Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families* (Oct 2026) | [arXiv:2610.37484](https://arxiv.org/abs/2610.37484) | [`paper2/`](paper2/) (paper, LaTeX source, figures and figure scripts) |
 
 Paper 1 builds the measurement instrument (the pressure ladder and a known-depth calibration
 ladder of trained models); paper 2 uses it to show that one drop-in corpus installs the
@@ -142,13 +142,14 @@ Paper 1:
   url     = {https://arxiv.org/abs/2610.16043}
 }
 ```
-Paper 2 (arXiv identifier to be added on posting):
+Paper 2:
 ```bibtex
 @article{northen2026teachreality,
   title   = {Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human--biosphere--{AI} welfare dispositions across model families},
   author  = {Northen, Trent R. and Wang, Mingxun},
-  journal = {arXiv preprint},
-  year    = {2026}
+  journal = {arXiv preprint arXiv:2610.37484},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2610.37484}
 }
 ```
 
